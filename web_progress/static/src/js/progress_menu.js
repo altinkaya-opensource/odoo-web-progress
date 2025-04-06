@@ -23,7 +23,7 @@ var ProgressMenu = Widget.extend({
         core.bus.on('rpc_progress_destroy', this, this._removeProgressBar);
         this.progressCounter = 0;
         this.$progresses_preview = this.$('.o_mail_systray_dropdown_items');
-        if (!this.getSession().is_system) {
+        if (!session.is_system) {
             this.$el.toggleClass('hidden', !this.progressCounter);
         }
         this.call('bus_service', 'addEventListener', 'notification', this._onNotification.bind(this));
@@ -103,7 +103,7 @@ var ProgressMenu = Widget.extend({
      * @private
      */
     _updateProgressMenu: function() {
-        var session_uid = this.getSession().uid;
+        var session_uid = session.uid;
         this.progressCounter = Object.keys(this.progress_bars).length;
         this.$('.o_notification_counter').text(this.progressCounter);
         if (this.progressCounter > 0) {
@@ -114,7 +114,7 @@ var ProgressMenu = Widget.extend({
             this.$el.addClass('o_no_notification');
         }
         this.$('.o_notification_counter').toggleClass('o_hidden', !this.progressCounter);
-        if (!this.getSession().is_system) {
+        if (!session.is_system) {
             this.$el.toggleClass('o_hidden', !this.progressCounter);
         }
     },
@@ -146,8 +146,8 @@ var ProgressMenu = Widget.extend({
      * @private
      */
     _processProgressData: function(code, state, uid) {
-        var session_uid = this.getSession().uid;
-        var session_is_system = this.getSession().is_system;
+        var session_uid = session.uid;
+        var session_is_system = session.is_system;
         var progress_bar = this._findProgressBar(code);
         if (session_uid !== uid && !session_is_system) {
             return;
